@@ -1,4 +1,4 @@
-import { Arbitrum, Sepolia } from '@thirdweb-dev/chains'
+import { Arbitrum, Sepolia, ArbitrumSepolia } from '@thirdweb-dev/chains'
 import { useAddress, useContract } from '@thirdweb-dev/react'
 import CompetitorABI from 'const/abis/Competitor.json'
 import ERC20 from 'const/abis/ERC20.json'
@@ -17,6 +17,7 @@ import useWindowSize from '@/lib/team/use-window-size'
 import ChainContext from '@/lib/thirdweb/chain-context'
 import useTokenSupply from '@/lib/tokens/hooks/useTokenSupply'
 import useWatchTokenBalance from '@/lib/tokens/hooks/useWatchTokenBalance'
+import Market from '@/components/betting/Market'
 import Asset from '@/components/dashboard/treasury/balance/Asset'
 import Container from '@/components/layout/Container'
 import ContentLayout from '@/components/layout/ContentLayout'
@@ -122,21 +123,13 @@ export function DePrize({ competitors, refreshRewards }: DePrizeProps) {
               </h3>
             </div>
             <div>
-              {competitors &&
-                competitors.length > 0 &&
-                competitors.map((competitor, i: number) => (
-                  <div
-                    key={i}
-                    className="flex items-center w-full py-1 text-[17px]"
-                  >
-                    <div className="flex-1 px-8">
-                      <CompetitorPreview
-                        teamId={competitor.teamId}
-                        teamContract={teamContract}
-                      />
-                    </div>
-                  </div>
-                ))}
+              {competitors && (
+                <Market
+                  account={userAddress}
+                  competitors={competitors}
+                  teamContract={teamContract}
+                />
+              )}
             </div>
           </div>
         </ContentLayout>
